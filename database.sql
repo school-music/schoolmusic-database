@@ -1,4 +1,11 @@
-
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Wrz 28, 2026 at 05:03 PM
+-- Wersja serwera: 10.4.32-MariaDB
+-- Wersja PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -11,25 +18,25 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `school_music_final`
+-- Database: `school_music`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `artists`
+-- Struktura tabeli dla tabeli `artists`
 --
 
 CREATE TABLE `artists` (
   `id` int(11) NOT NULL,
-  `spotify_artist_id` text NOT NULL,
+  `spotify_artist_id` varchar(255) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
   `name` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `artist_blacklist`
+-- Struktura tabeli dla tabeli `artist_blacklist`
 --
 
 CREATE TABLE `artist_blacklist` (
@@ -41,7 +48,7 @@ CREATE TABLE `artist_blacklist` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `banned_users`
+-- Struktura tabeli dla tabeli `banned_users`
 --
 
 CREATE TABLE `banned_users` (
@@ -55,21 +62,21 @@ CREATE TABLE `banned_users` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `break`
+-- Struktura tabeli dla tabeli `break`
 --
 
 CREATE TABLE `break` (
   `id` int(11) NOT NULL,
-  `start_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `ends_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `vote_ends` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `start_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `ends_at` timestamp NULL DEFAULT NULL,
+  `vote_ends` timestamp NULL DEFAULT NULL,
   `break_number` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `default_songs`
+-- Struktura tabeli dla tabeli `default_songs`
 --
 
 CREATE TABLE `default_songs` (
@@ -80,20 +87,20 @@ CREATE TABLE `default_songs` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `exception_day`
+-- Struktura tabeli dla tabeli `exception_day`
 --
 
 CREATE TABLE `exception_day` (
   `id` int(11) NOT NULL,
-  `start_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `ends_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `start_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `ends_at` timestamp NULL DEFAULT NULL,
   `description` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `history`
+-- Struktura tabeli dla tabeli `history`
 --
 
 CREATE TABLE `history` (
@@ -107,7 +114,7 @@ CREATE TABLE `history` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `moderators`
+-- Struktura tabeli dla tabeli `moderators`
 --
 
 CREATE TABLE `moderators` (
@@ -121,7 +128,7 @@ CREATE TABLE `moderators` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `queue_items`
+-- Struktura tabeli dla tabeli `queue_items`
 --
 
 CREATE TABLE `queue_items` (
@@ -129,9 +136,9 @@ CREATE TABLE `queue_items` (
   `break_id` int(11) NOT NULL,
   `song_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `greenlist_id` int(11) NOT NULL,
-  `blacklist_id` int(11) NOT NULL,
-  `moderator_id` int(11) NOT NULL,
+  `greenlist_id` int(11) DEFAULT NULL,
+  `blacklist_id` int(11) DEFAULT NULL,
+  `moderator_id` int(11) DEFAULT NULL,
   `moderation_status` enum('approved','rejected') DEFAULT NULL,
   `order_index` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -139,7 +146,7 @@ CREATE TABLE `queue_items` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ranks`
+-- Struktura tabeli dla tabeli `ranks`
 --
 
 CREATE TABLE `ranks` (
@@ -160,12 +167,12 @@ INSERT INTO `ranks` (`id`, `rank`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `songs`
+-- Struktura tabeli dla tabeli `songs`
 --
 
 CREATE TABLE `songs` (
   `id` int(11) NOT NULL,
-  `spotify_id` text NOT NULL,
+  `spotify_id` varchar(255) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
   `title` text NOT NULL,
   `artist_id` int(11) NOT NULL,
   `cover` text NOT NULL,
@@ -175,7 +182,7 @@ CREATE TABLE `songs` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `song_blacklist`
+-- Struktura tabeli dla tabeli `song_blacklist`
 --
 
 CREATE TABLE `song_blacklist` (
@@ -188,7 +195,7 @@ CREATE TABLE `song_blacklist` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `song_greenlist`
+-- Struktura tabeli dla tabeli `song_greenlist`
 --
 
 CREATE TABLE `song_greenlist` (
@@ -201,21 +208,21 @@ CREATE TABLE `song_greenlist` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `special_event`
+-- Struktura tabeli dla tabeli `special_event`
 --
 
 CREATE TABLE `special_event` (
   `id` int(11) NOT NULL,
   `title` varchar(255) DEFAULT NULL,
   `file_url` text NOT NULL,
-  `starts_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `starts_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `event_status` enum('pending','playing','done') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Struktura tabeli dla tabeli `users`
 --
 
 CREATE TABLE `users` (
@@ -230,7 +237,7 @@ CREATE TABLE `users` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_favourites`
+-- Struktura tabeli dla tabeli `user_favourites`
 --
 
 CREATE TABLE `user_favourites` (
@@ -241,35 +248,37 @@ CREATE TABLE `user_favourites` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `votes`
+-- Struktura tabeli dla tabeli `votes`
 --
 
 CREATE TABLE `votes` (
   `id` int(11) NOT NULL,
-  `queue_item_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL
+  `user_id` int(11) NOT NULL,
+  `queue_item_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Indexes for dumped tables
+-- Indeksy dla zrzutów tabel
 --
 
 --
--- Indexes for table `artists`
+-- Indeksy dla tabeli `artists`
 --
 ALTER TABLE `artists`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uniq_spotify_artist` (`spotify_artist_id`);
 
 --
--- Indexes for table `artist_blacklist`
+-- Indeksy dla tabeli `artist_blacklist`
 --
 ALTER TABLE `artist_blacklist`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uniq_black_artist` (`artist_id`),
   ADD KEY `artist_id` (`artist_id`),
   ADD KEY `moderator_id` (`moderator_id`);
 
 --
--- Indexes for table `banned_users`
+-- Indeksy dla tabeli `banned_users`
 --
 ALTER TABLE `banned_users`
   ADD PRIMARY KEY (`id`),
@@ -277,26 +286,26 @@ ALTER TABLE `banned_users`
   ADD KEY `moderator_id` (`moderator_id`);
 
 --
--- Indexes for table `break`
+-- Indeksy dla tabeli `break`
 --
 ALTER TABLE `break`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `default_songs`
+-- Indeksy dla tabeli `default_songs`
 --
 ALTER TABLE `default_songs`
   ADD PRIMARY KEY (`id`),
   ADD KEY `song_id` (`song_id`);
 
 --
--- Indexes for table `exception_day`
+-- Indeksy dla tabeli `exception_day`
 --
 ALTER TABLE `exception_day`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `history`
+-- Indeksy dla tabeli `history`
 --
 ALTER TABLE `history`
   ADD PRIMARY KEY (`id`),
@@ -304,17 +313,20 @@ ALTER TABLE `history`
   ADD KEY `break_id` (`break_id`);
 
 --
--- Indexes for table `moderators`
+-- Indeksy dla tabeli `moderators`
 --
 ALTER TABLE `moderators`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uniq_mod_user` (`user_id`),
   ADD KEY `user_id` (`user_id`);
 
 --
--- Indexes for table `queue_items`
+-- Indeksy dla tabeli `queue_items`
 --
 ALTER TABLE `queue_items`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uniq_break_song` (`break_id`,`song_id`),
+  ADD UNIQUE KEY `uniq_break_order` (`break_id`,`order_index`),
   ADD KEY `break_id` (`break_id`),
   ADD KEY `song_id` (`song_id`),
   ADD KEY `user_id` (`user_id`),
@@ -323,44 +335,47 @@ ALTER TABLE `queue_items`
   ADD KEY `moderator_id` (`moderator_id`);
 
 --
--- Indexes for table `ranks`
+-- Indeksy dla tabeli `ranks`
 --
 ALTER TABLE `ranks`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `songs`
+-- Indeksy dla tabeli `songs`
 --
 ALTER TABLE `songs`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uniq_spotify_song` (`spotify_id`),
   ADD KEY `artist_id` (`artist_id`);
 
 --
--- Indexes for table `song_blacklist`
+-- Indeksy dla tabeli `song_blacklist`
 --
 ALTER TABLE `song_blacklist`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uniq_black_song` (`song_id`),
   ADD KEY `song_id` (`song_id`),
   ADD KEY `artist_id` (`artist_id`),
   ADD KEY `mod_id` (`mod_id`);
 
 --
--- Indexes for table `song_greenlist`
+-- Indeksy dla tabeli `song_greenlist`
 --
 ALTER TABLE `song_greenlist`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uniq_green_song` (`song_id`),
   ADD KEY `song_id` (`song_id`),
   ADD KEY `artist_id` (`artist_id`),
   ADD KEY `mod_id` (`mod_id`);
 
 --
--- Indexes for table `special_event`
+-- Indeksy dla tabeli `special_event`
 --
 ALTER TABLE `special_event`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `users`
+-- Indeksy dla tabeli `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
@@ -368,18 +383,18 @@ ALTER TABLE `users`
   ADD KEY `rank_id` (`rank_id`);
 
 --
--- Indexes for table `user_favourites`
+-- Indeksy dla tabeli `user_favourites`
 --
 ALTER TABLE `user_favourites`
   ADD PRIMARY KEY (`user_id`,`song_id`),
   ADD KEY `song_id` (`song_id`);
 
 --
--- Indexes for table `votes`
+-- Indeksy dla tabeli `votes`
 --
 ALTER TABLE `votes`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `user_id` (`user_id`),
+  ADD UNIQUE KEY `user_id` (`user_id`,`queue_item_id`),
   ADD KEY `queue_item_id` (`queue_item_id`);
 
 --
@@ -576,4 +591,3 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
--- database.sql
