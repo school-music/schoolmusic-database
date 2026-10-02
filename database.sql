@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Wrz 28, 2026 at 07:55 PM
+-- Generation Time: Paź 02, 2026 at 06:48 PM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `school_music`
+-- Database: `schoolmusic`
 --
 
 -- --------------------------------------------------------
@@ -29,9 +29,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `artists` (
   `id` int(11) NOT NULL,
-  `spotify_artist_id` varchar(255) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+  `spotify_artist_id` varchar(255) NOT NULL,
   `name` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 -- --------------------------------------------------------
 
@@ -43,7 +43,7 @@ CREATE TABLE `artist_blacklist` (
   `id` int(11) NOT NULL,
   `artist_id` int(11) NOT NULL,
   `moderator_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 -- --------------------------------------------------------
 
@@ -57,7 +57,7 @@ CREATE TABLE `banned_users` (
   `reason` text DEFAULT NULL,
   `moderator_id` int(11) NOT NULL,
   `banned_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 -- --------------------------------------------------------
 
@@ -71,7 +71,21 @@ CREATE TABLE `break` (
   `ends_at` timestamp NULL DEFAULT NULL,
   `vote_ends` timestamp NULL DEFAULT NULL,
   `break_number` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
+--
+-- Dumping data for table `break`
+--
+
+INSERT INTO `break` (`id`, `start_at`, `ends_at`, `vote_ends`, `break_number`) VALUES
+(1, '2026-01-01 07:45:00', '2026-01-01 07:55:00', '2026-01-01 07:45:00', 1),
+(2, '2026-01-01 08:40:00', '2026-01-01 08:50:00', '2026-01-01 08:40:00', 2),
+(3, '2026-01-01 09:35:00', '2026-01-01 09:45:00', '2026-01-01 09:35:00', 3),
+(4, '2026-01-01 10:30:00', '2026-01-01 10:50:00', '2026-01-01 10:30:00', 4),
+(5, '2026-01-01 11:35:00', '2026-01-01 11:45:00', '2026-01-01 11:35:00', 5),
+(6, '2026-01-01 12:30:00', '2026-01-01 12:40:00', '2026-01-01 12:30:00', 6),
+(7, '2026-01-01 13:25:00', '2026-01-01 13:35:00', '2026-01-01 13:25:00', 7),
+(8, '2026-01-01 14:20:00', '2026-01-01 14:25:00', '2026-01-01 14:20:00', 8);
 
 -- --------------------------------------------------------
 
@@ -82,7 +96,20 @@ CREATE TABLE `break` (
 CREATE TABLE `default_songs` (
   `id` int(11) NOT NULL,
   `song_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `exception_break`
+--
+
+CREATE TABLE `exception_break` (
+  `id` int(11) NOT NULL,
+  `starts_at` datetime NOT NULL,
+  `ends_at` datetime DEFAULT NULL,
+  `description` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 -- --------------------------------------------------------
 
@@ -95,7 +122,7 @@ CREATE TABLE `exception_day` (
   `start_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `ends_at` timestamp NULL DEFAULT NULL,
   `description` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 -- --------------------------------------------------------
 
@@ -109,7 +136,7 @@ CREATE TABLE `history` (
   `played_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `break_id` int(11) NOT NULL,
   `votes` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 -- --------------------------------------------------------
 
@@ -123,7 +150,7 @@ CREATE TABLE `moderators` (
   `artists_banned` int(11) DEFAULT NULL,
   `songs_baned` int(11) DEFAULT NULL,
   `songs_approved` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 -- --------------------------------------------------------
 
@@ -141,7 +168,7 @@ CREATE TABLE `queue_items` (
   `moderator_id` int(11) DEFAULT NULL,
   `moderation_status` enum('approved','rejected') DEFAULT NULL,
   `order_index` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 -- --------------------------------------------------------
 
@@ -152,7 +179,7 @@ CREATE TABLE `queue_items` (
 CREATE TABLE `ranks` (
   `id` int(11) NOT NULL,
   `rank` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
 -- Dumping data for table `ranks`
@@ -172,12 +199,12 @@ INSERT INTO `ranks` (`id`, `rank`) VALUES
 
 CREATE TABLE `songs` (
   `id` int(11) NOT NULL,
-  `spotify_id` varchar(255) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+  `spotify_id` varchar(255) NOT NULL,
   `title` text NOT NULL,
   `artist_id` int(11) NOT NULL,
   `cover` text NOT NULL,
   `duration_ms` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 -- --------------------------------------------------------
 
@@ -190,7 +217,7 @@ CREATE TABLE `song_blacklist` (
   `song_id` int(11) NOT NULL,
   `artist_id` int(11) NOT NULL,
   `mod_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 -- --------------------------------------------------------
 
@@ -203,7 +230,7 @@ CREATE TABLE `song_greenlist` (
   `song_id` int(11) NOT NULL,
   `artist_id` int(11) NOT NULL,
   `mod_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 -- --------------------------------------------------------
 
@@ -217,7 +244,7 @@ CREATE TABLE `special_event` (
   `file_url` text NOT NULL,
   `starts_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `event_status` enum('pending','playing','done') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 -- --------------------------------------------------------
 
@@ -232,7 +259,14 @@ CREATE TABLE `users` (
   `rank_id` int(11) NOT NULL DEFAULT 1,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `password_changed_at` datetime DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `user_login`, `user_password`, `rank_id`, `created_at`, `password_changed_at`) VALUES
+(1, 'Szymon', '$2a$11$zNoEKWex7gSV3IqX55UHVe1HadXBlp29nt5uhNIG8f3d62PUZdHo.', 3, '2026-09-29 18:22:10', '2026-09-29 18:22:10');
 
 -- --------------------------------------------------------
 
@@ -243,7 +277,7 @@ CREATE TABLE `users` (
 CREATE TABLE `user_favourites` (
   `user_id` int(11) NOT NULL,
   `song_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 -- --------------------------------------------------------
 
@@ -255,7 +289,7 @@ CREATE TABLE `votes` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `queue_item_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
 -- Indeksy dla zrzutów tabel
@@ -297,6 +331,12 @@ ALTER TABLE `break`
 ALTER TABLE `default_songs`
   ADD PRIMARY KEY (`id`),
   ADD KEY `song_id` (`song_id`);
+
+--
+-- Indeksy dla tabeli `exception_break`
+--
+ALTER TABLE `exception_break`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indeksy dla tabeli `exception_day`
@@ -423,12 +463,18 @@ ALTER TABLE `banned_users`
 -- AUTO_INCREMENT for table `break`
 --
 ALTER TABLE `break`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `default_songs`
 --
 ALTER TABLE `default_songs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `exception_break`
+--
+ALTER TABLE `exception_break`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -489,7 +535,7 @@ ALTER TABLE `special_event`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `votes`
